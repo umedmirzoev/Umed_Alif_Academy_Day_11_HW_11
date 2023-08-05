@@ -1,10 +1,16 @@
 ﻿using System.Collections.Generic;
 
-class Client
+public interface IClientService
+{
+    void CreateClient(ClientInfo client);
+    ClientInfo GetClientByName(string firstName, string lastName);
+}
+
+public abstract class Client : IClientService
 {
     private List<ClientInfo> clients = new List<ClientInfo>();
 
-    public void CreateClient(ClientInfo client)
+    public virtual void CreateClient(ClientInfo client)
     {
         if (!ValidateClient(client))
         {
@@ -15,7 +21,7 @@ class Client
         Console.WriteLine("Client created and added successfully!");
     }
 
-    public ClientInfo GetClientByName(string firstName, string lastName)
+    public virtual ClientInfo GetClientByName(string firstName, string lastName)
     {
         return clients.Find(client => client.FirstName == firstName && client.LastName == lastName);
     }

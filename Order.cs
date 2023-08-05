@@ -1,4 +1,11 @@
-﻿class Order
+﻿public interface IOrderService
+{
+    void CreateOrder(OrderInfo order);
+    OrderInfo GetOrderByDescription(string description);
+    OrderInfo GetOrderByOrderNumber(string orderNumber);
+}
+
+public abstract class Order : IOrderService
 {
     private List<OrderInfo> orders = new List<OrderInfo>();
 
@@ -13,12 +20,12 @@
         Console.WriteLine("Order created and added successfully!");
     }
 
-    public OrderInfo GetOrderByDescription(string description)
+    public virtual OrderInfo GetOrderByDescription(string description)
     {
         return orders.Find(order => order.Description == description);
     }
 
-    public OrderInfo GetOrderByOrderNumber(string orderNumber)
+    public virtual OrderInfo GetOrderByOrderNumber(string orderNumber)
     {
         return orders.Find(order => order.OrderNumber == orderNumber);
     }
@@ -29,3 +36,4 @@
                !string.IsNullOrWhiteSpace(order.Description);
     }
 }
+
