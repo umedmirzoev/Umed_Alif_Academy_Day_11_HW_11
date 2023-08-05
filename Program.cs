@@ -1,8 +1,11 @@
-﻿public class Program
+﻿public record ClientInfo(string FirstName, string LastName, string Phone, string Email, string Password, string Age);
+public record OrderInfo(string OrderNumber, string Description, string OrderPrice, DateTime OrderDate);
+public class Program
 {
     public static void Main(string[] args)
     {
         Console.WriteLine("Welcome to CRM!");
+        Client clientService = new();
 
         while (true)
         {
@@ -11,7 +14,7 @@
 
             if (input == "create client")
             {
-                CreateClient();
+                CreateClient(clientService);
             }
             else if (input == "create order")
             {
@@ -28,7 +31,7 @@
         }
     }
 
-    private static void CreateClient()
+    private static void CreateClient(Client clientService)
     {
         try
         {
@@ -44,22 +47,16 @@
             Console.WriteLine("Enter the Age of the client:");
             string age = Console.ReadLine().Trim();
 
-            Console.WriteLine("Enter the Passport Number of the client:");
-            string passportNum = Console.ReadLine().Trim();
-
             Console.WriteLine("Enter the Phone Number of the client:");
             string phoneNum = Console.ReadLine().Trim();
 
             Console.WriteLine("Enter the Password of the client:");
             string password = Console.ReadLine().Trim();
 
-            Console.WriteLine("Enter the Maritual Status of the client:");
-            string status = Console.ReadLine().Trim();
+            var clientinfo = new ClientInfo(firstName, lastName, phoneNum, email, password, age);
 
-            Client client = new (firstName, lastName, email, age, passportNum, password, phoneNum, status);
+            clientService.CreateClient(clientinfo);
 
-            // Save the client to CRM 
-            Console.WriteLine("Client created successfully!");
         }
         catch (ArgumentException ex)
         {

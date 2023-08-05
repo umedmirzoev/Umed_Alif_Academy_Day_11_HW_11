@@ -2,70 +2,26 @@
 
 class Client
 {
-    public string firstName { get; init; }
-    public string lastName { get; init; }
-    public string email { get; init; }
-    public string age { get; init; }
-    public string passportNum { get; init; }
-    public string password { get; init; }
-    public string phoneNum { get; init; }
-    public string maritualStatus { get; init; }
+    private List<ClientInfo> clients = new List<ClientInfo>();
 
-    public Client(string fName, string lName, string mail, string dob, string passport, string passwd, string phone, string status)
+    public void CreateClient(ClientInfo client)
     {
-        firstName = fName;
-        lastName = lName;
-        email = mail;
-        age = dob;
-        passportNum = passport;
-        password = passwd;
-        phoneNum = phone;
-        maritualStatus = status;
+        if (!ValidateClient(client))
+        {
+            throw new ArgumentException("Invalid client information.");
+        }
+
+        clients.Add(client);
+        Console.WriteLine("Client created and added successfully!");
     }
 
-    // Validation at the level of getters and setters
-    
-    public string FirstName
+    private bool ValidateClient(ClientInfo client)
     {
-        get => firstName ?? string.Empty;
-        init => firstName = value is { Length: > 0 } ? value : throw new ArgumentOutOfRangeException(nameof(value));
-    }
-
-    public string LastName
-    {
-        get => lastName ?? string.Empty;
-        init => lastName = value is { Length: > 0 } ? value : throw new ArgumentOutOfRangeException(nameof(value));
-    }
-
-    public string Email
-    {
-        get => email ?? string.Empty;
-        init => email = value is { Length: > 0 } ? value : throw new ArgumentOutOfRangeException(nameof(value));
-    }
-
-    public string Age
-    {
-        get => age ?? string.Empty;
-        init => age = value is { Length: > 0 } ? value : throw new ArgumentOutOfRangeException(nameof(value));
-    }
-    public string PassportNum
-    {
-        get => passportNum ?? string.Empty;
-        init => passportNum = value is { Length: > 0 } ? value : throw new ArgumentOutOfRangeException(nameof(value));
-    }
-    public string PhoneNum
-    { 
-        get => phoneNum ?? string.Empty;
-        init => phoneNum = value is { Length: > 0 } ? value : throw new ArgumentOutOfRangeException(nameof(value));
-    }
-    public string Password
-    {
-        get => password ?? string.Empty;
-        init => password = value is { Length: > 0 } ? value : throw new ArgumentOutOfRangeException(nameof(value));
-    }
-    public string MaritualStatus
-    {
-        get => maritualStatus ?? string.Empty;
-        init => maritualStatus = value is { Length: > 0 } ? value : throw new ArgumentOutOfRangeException(nameof(value));
+        return !string.IsNullOrWhiteSpace(client.FirstName) &&
+               !string.IsNullOrWhiteSpace(client.LastName) &&
+               !string.IsNullOrWhiteSpace(client.Phone) &&
+               !string.IsNullOrWhiteSpace(client.Email) &&
+               !string.IsNullOrWhiteSpace(client.Password);
+        
     }
 }
