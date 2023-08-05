@@ -15,6 +15,11 @@ class Client
         Console.WriteLine("Client created and added successfully!");
     }
 
+    public ClientInfo GetClientByName(string firstName, string lastName)
+    {
+        return clients.Find(client => client.FirstName == firstName && client.LastName == lastName);
+    }
+
     private bool ValidateClient(ClientInfo client)
     {
         return !string.IsNullOrWhiteSpace(client.FirstName) &&

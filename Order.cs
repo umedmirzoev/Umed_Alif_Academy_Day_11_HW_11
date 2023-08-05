@@ -1,37 +1,31 @@
 ﻿class Order
 {
-    public string orderNumber { get; init; }
-    public string description { get; init; }
-    public string orderPrice { get; init; }
-    public DateTime orderDate { get; init; }
+    private List<OrderInfo> orders = new List<OrderInfo>();
 
-    public Order(string orderNum, string des, string price, DateTime date)
+    public void CreateOrder(OrderInfo order)
     {
-        orderNumber = orderNum;
-        description = des;
-        orderPrice = price;
-        orderDate = date;
-    }
+        if (!ValidateOrder(order))
+        {
+            throw new ArgumentException("Invalid order information.");
+        }
 
-    public string _orderNumber
-    {
-        get => _orderNumber;
-        init => _orderNumber = value is { Length: > 0 } ? value : throw new ArgumentOutOfRangeException(nameof(value));
-    }
-    public string _description
-    {
-        get => _description;
-        init => _description = value is { Length: > 0 } ? value : throw new ArgumentOutOfRangeException(nameof(value));
-    }
-    public string _orderPrice
-    {
-        get => _orderPrice;
-        init => _orderPrice = value is { Length: > 0 } ? value : throw new ArgumentOutOfRangeException(nameof(value));
+        orders.Add(order);
+        Console.WriteLine("Order created and added successfully!");
     }
 
-    public string _orderDate
+    public OrderInfo GetOrderByDescription(string description)
     {
-        get => _orderDate;
-        init => _orderDate = value is { Length: > 0 } ? value : throw new ArgumentOutOfRangeException(nameof(value));
+        return orders.Find(order => order.Description == description);
+    }
+
+    public OrderInfo GetOrderByOrderNumber(string orderNumber)
+    {
+        return orders.Find(order => order.OrderNumber == orderNumber);
+    }
+
+    private bool ValidateOrder(OrderInfo order)
+    {
+        return !string.IsNullOrWhiteSpace(order.OrderNumber) &&
+               !string.IsNullOrWhiteSpace(order.Description);
     }
 }
