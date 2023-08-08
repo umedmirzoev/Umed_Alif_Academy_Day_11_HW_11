@@ -3,6 +3,8 @@
     void CreateOrder(OrderInfo order);
     OrderInfo GetOrderByDescription(string description);
     OrderInfo GetOrderByOrderNumber(string orderNumber);
+    void UpdateOrderDescription(OrderInfo order, string newDescription);
+    void DeleteOrder(OrderInfo order);
 }
 
 public abstract class Order : IOrderService
@@ -29,6 +31,35 @@ public abstract class Order : IOrderService
     {
         return orders.Find(order => order.OrderNumber == orderNumber);
     }
+
+
+    public virtual void UpdateOrderDescription(OrderInfo order, string newDescription)
+    {
+        if (order != null)
+        {
+            order = order with { Description = newDescription };
+            Console.WriteLine("Order description updated successfully!");
+        }
+        else
+        {
+            Console.WriteLine("Order not found.");
+        }
+    }
+
+    public virtual void DeleteOrder(OrderInfo order)
+    {
+        if (order != null)
+        {
+            orders.Remove(order);
+            Console.WriteLine("Order deleted successfully!");
+        }
+        else
+        {
+            Console.WriteLine("Order not found.");
+        }
+    }
+
+
 
     private bool ValidateOrder(OrderInfo order)
     {

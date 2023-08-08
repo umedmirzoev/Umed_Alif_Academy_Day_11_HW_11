@@ -6,7 +6,7 @@ public class Program
     {
         Console.WriteLine("Welcome to CRM!");
         IClientService clientService = new();
-        Order orderService = new();
+        IOrderService orderService = new();
 
         while (true)
         {
